@@ -1,0 +1,418 @@
+/* =========================================================
+   LIRA FERRER — Páginas internas (producto)
+   Guardar en: assets/css/paginas.css
+   Depende de styles.css (v4+): tokens, .btn, .coleccion, .pieza, .franja, .footer
+   ========================================================= */
+
+/* ---------- Paletas por pieza ----------
+   producto-tema.js pone data-tema="vino | perla | oliva" en <body>.
+   El BANNER toma el color del bolso (perla = champán claro, vino = burdeos,
+   oliva = musgo). @property permite que los colores se fundan entre paletas. */
+@property --banner-a        { syntax: '<color>'; inherits: true; initial-value: #e4d6b8; }
+@property --banner-b        { syntax: '<color>'; inherits: true; initial-value: #f3ebd9; }
+@property --tema-profundo   { syntax: '<color>'; inherits: true; initial-value: #0c3f2d; }
+@property --tema-medio      { syntax: '<color>'; inherits: true; initial-value: #11573d; }
+@property --tema-fondo      { syntax: '<color>'; inherits: true; initial-value: #f5f0e8; }
+@property --tema-escenario-1 { syntax: '<color>'; inherits: true; initial-value: #fbf7ef; }
+@property --tema-escenario-2 { syntax: '<color>'; inherits: true; initial-value: #e9dfcc; }
+@property --tema-texto      { syntax: '<color>'; inherits: true; initial-value: #0c3f2d; }
+@property --tema-acento     { syntax: '<color>'; inherits: true; initial-value: #6a5018; }
+
+body.pagina-interna {
+  /* PERLA (por defecto): banner champán claro, texto esmeralda */
+  --banner-a: #e4d6b8;
+  --banner-b: #f3ebd9;
+  --tema-texto: #0c3f2d;
+  --tema-texto-suave: rgba(12, 63, 45, 0.72);
+  --tema-acento: #6a5018;
+  --tema-linea: rgba(138, 109, 43, 0.45);
+  --tema-marca: rgba(12, 63, 45, 0.08);
+  --tema-cinta: rgba(12, 63, 45, 0.07);
+  --tema-brillo: rgba(255, 255, 255, 0.65);
+  /* colores de acción y fondo de página */
+  --tema-profundo: #0c3f2d;
+  --tema-medio: #11573d;
+  --tema-fondo: #f5f0e8;
+  --tema-escenario-1: #fbf7ef;
+  --tema-escenario-2: #e9dfcc;
+  --solape-banner: 110px;
+
+  background: var(--tema-fondo);
+  transition:
+    --banner-a 0.9s ease, --banner-b 0.9s ease,
+    --tema-profundo 0.9s ease, --tema-medio 0.9s ease, --tema-fondo 0.9s ease,
+    --tema-escenario-1 0.9s ease, --tema-escenario-2 0.9s ease,
+    --tema-texto 0.9s ease, --tema-acento 0.9s ease;
+}
+/* VINO: banner burdeos, texto claro */
+body.pagina-interna[data-tema="vino"] {
+  --banner-a: #4a1018;
+  --banner-b: #6d1a28;
+  --tema-texto: #ffffff;
+  --tema-texto-suave: rgba(255, 255, 255, 0.72);
+  --tema-acento: #e2c98a;
+  --tema-linea: rgba(201, 169, 97, 0.35);
+  --tema-marca: rgba(255, 255, 255, 0.07);
+  --tema-cinta: rgba(0, 0, 0, 0.14);
+  --tema-brillo: rgba(222, 128, 140, 0.24);
+  --tema-profundo: #4a1018;
+  --tema-medio: #6d1a28;
+  --tema-fondo: #f7eeea;
+  --tema-escenario-1: #faeeea;
+  --tema-escenario-2: #e8cdc6;
+}
+/* OLIVA: banner musgo, texto claro */
+body.pagina-interna[data-tema="oliva"] {
+  --banner-a: #2c3a1b;
+  --banner-b: #4b5c2c;
+  --tema-texto: #ffffff;
+  --tema-texto-suave: rgba(255, 255, 255, 0.72);
+  --tema-acento: #e2c98a;
+  --tema-linea: rgba(201, 169, 97, 0.35);
+  --tema-marca: rgba(255, 255, 255, 0.07);
+  --tema-cinta: rgba(0, 0, 0, 0.14);
+  --tema-brillo: rgba(196, 212, 142, 0.22);
+  --tema-profundo: #2c3a1b;
+  --tema-medio: #4b5c2c;
+  --tema-fondo: #f1f1e5;
+  --tema-escenario-1: #f5f6e8;
+  --tema-escenario-2: #d9debd;
+}
+
+/* Barra de navegación sólida en páginas internas */
+.nav-solida { background: rgba(8, 46, 33, 0.96); }
+
+/* =========================================================
+   BANNER ANIMADO DE LA PIEZA (toma el color del bolso)
+   ========================================================= */
+.banner-pieza {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 128px 0 calc(var(--solape-banner) + 74px);
+  color: var(--tema-texto);
+  background: linear-gradient(115deg, var(--banner-a) 0%, var(--banner-b) 50%, var(--banner-a) 100%);
+  background-size: 220% 220%;
+  animation: fluir 20s ease-in-out infinite;
+}
+@keyframes fluir {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+/* Resplandor que deriva */
+.banner-pieza::before {
+  content: '';
+  position: absolute; z-index: -1;
+  width: 60vw; aspect-ratio: 1;
+  right: -12vw; top: -34vw;
+  background: radial-gradient(circle, var(--tema-brillo) 0%, transparent 65%);
+  animation: deriva 14s ease-in-out infinite alternate;
+}
+@keyframes deriva {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-8vw, 6vw, 0) scale(1.15); }
+}
+/* Arcos concéntricos (eco del hero) */
+.banner-arco {
+  position: absolute; z-index: -1;
+  left: 6%; bottom: 0;
+  width: clamp(200px, 26vw, 360px);
+  aspect-ratio: 1 / 1.35;
+  border: 1px solid var(--tema-linea);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  animation: respirar 9s ease-in-out infinite;
+}
+.banner-arco + .banner-arco {
+  left: calc(6% - 26px);
+  width: calc(clamp(200px, 26vw, 360px) + 52px);
+  opacity: 0.55;
+  animation-delay: -4.5s;
+}
+@keyframes respirar {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.04); }
+}
+/* Nombre de la pieza en caligrafía, muy tenue */
+.banner-marca {
+  position: absolute; z-index: -1;
+  right: 5%; top: 108px;
+  font-family: var(--script);
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: 1;
+  color: var(--tema-marca);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+/* Cinta inferior con texto en movimiento */
+.banner-cinta {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  padding: 14px 0;
+  border-top: 1px solid var(--tema-linea);
+  border-bottom: 0;                       /* anula el borde doble de .franja */
+  background: var(--tema-cinta);
+}
+.banner-cinta .franja-track { animation-duration: 40s; }
+.banner-cinta .franja-grupo { gap: 44px; padding-right: 44px; }
+.banner-cinta span { color: var(--tema-texto-suave); font-size: 0.75rem; }
+.banner-cinta span::before { background: var(--tema-acento); }
+
+/* Migas de pan (dentro del banner) */
+.migas {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.migas a { color: var(--tema-texto-suave); transition: color 0.3s ease; }
+.migas a:hover { color: var(--tema-acento); }
+.migas span { color: var(--tema-texto-suave); opacity: 0.6; }
+#migaNombre { color: var(--tema-acento); font-weight: 600; opacity: 1; }
+
+/* =========================================================
+   CUERPO DE LA PÁGINA
+   ========================================================= */
+.pagina-main { padding-bottom: var(--seccion); }
+
+/* Estados: cargando / no encontrada */
+.estado { text-align: center; padding: 56px 0 90px; }
+.estado h2 { font-family: var(--serif); font-weight: 400; font-size: 2.4rem; color: var(--tema-profundo); margin-bottom: 10px; }
+.estado p { color: var(--gris); margin-bottom: 24px; }
+.spinner {
+  display: block;
+  width: 38px; height: 38px;
+  margin: 0 auto 16px;
+  border: 2px solid rgba(201, 169, 97, 0.3);
+  border-top-color: var(--oro);
+  border-radius: 50%;
+  animation: girar 0.9s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Detalle: dos columnas; la galería invade el banner */
+.producto-detalle {
+  position: relative; z-index: 2;
+  margin-top: calc(var(--solape-banner) * -1);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+
+/* ---------- Galería: escenario en arco ---------- */
+.producto-galeria {
+  position: sticky;
+  top: 104px;
+  margin: 12px;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px 999px 14px 14px;
+  background: radial-gradient(ellipse at 50% 28%, var(--tema-escenario-1) 0%, var(--tema-escenario-2) 100%);
+  box-shadow:
+    0 0 0 10px var(--tema-fondo),
+    0 0 0 11px rgba(201, 169, 97, 0.65),
+    0 40px 70px rgba(30, 20, 10, 0.22);
+}
+.producto-galeria img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 12% 9% 8%;
+  filter: drop-shadow(0 26px 22px rgba(60, 35, 15, 0.3));
+}
+/* Una sola imagen: vaivén sutil, igual que el bolso del inicio */
+.producto-galeria.galeria-simple img { animation: flotar 7s ease-in-out infinite; }
+/* Varias imágenes (miniaturas): el escenario deja de recortar */
+.producto-galeria.galeria-multiple {
+  aspect-ratio: auto;
+  overflow: visible;
+  border-radius: 14px;
+  box-shadow: 0 0 0 10px var(--tema-fondo), 0 0 0 11px rgba(201, 169, 97, 0.65), 0 40px 70px rgba(30, 20, 10, 0.22);
+}
+
+/* ---------- Información ---------- */
+.producto-info { padding-top: calc(var(--solape-banner) + 28px); }
+.producto-info h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  line-height: 1.02;
+  color: var(--tema-profundo);
+  margin-bottom: 12px;
+}
+.producto-color {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oro-oscuro);
+  margin-bottom: 18px;
+}
+.producto-precio-grande { font-size: 1.7rem; font-weight: 600; letter-spacing: 0.01em; color: var(--texto); }
+.linea-oro-izq { width: 56px; height: 1px; background: var(--oro); margin: 26px 0; }
+.producto-descripcion { font-size: 1rem; color: var(--texto); max-width: 52ch; }
+
+/* Selector de otros colores (lo construye producto-tema.js) */
+.producto-colores { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; }
+.producto-colores > span { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gris); }
+.producto-colores a {
+  position: relative;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s var(--ease);
+}
+.producto-colores a:hover { transform: scale(1.12); }
+.producto-colores a.activo { box-shadow: 0 0 0 3px var(--tema-fondo), 0 0 0 4px var(--oro-oscuro), inset 0 0 0 1px rgba(0, 0, 0, 0.18); }
+
+/* Ficha técnica: funciona tanto con <div><dt><dd></div> como con dt/dd sueltos */
+.producto-specs {
+  display: grid;
+  grid-template-columns: minmax(96px, 140px) 1fr;
+  margin: 28px 0 32px;
+  border-bottom: 1px solid rgba(138, 109, 43, 0.28);
+}
+.producto-specs > div { display: contents; }
+.producto-specs dt,
+.producto-specs dd { padding: 15px 0; border-top: 1px solid rgba(138, 109, 43, 0.28); }
+.producto-specs dt { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--oro-oscuro); }
+.producto-specs dd { font-size: 0.95rem; color: var(--texto); }
+
+/* Compra */
+.producto-compra { display: flex; align-items: stretch; gap: 12px; }
+.cantidad {
+  display: inline-flex; align-items: center;
+  height: 54px;
+  border: 1px solid rgba(12, 63, 45, 0.25);
+  border-radius: var(--radio-pill);
+  background: var(--blanco);
+}
+.cantidad button {
+  width: 48px; height: 100%;
+  background: none; border: 0;
+  font-size: 1.25rem; line-height: 1;
+  color: var(--tema-profundo);
+  cursor: pointer;
+  border-radius: var(--radio-pill);
+  transition: background 0.3s ease;
+}
+.cantidad button:hover { background: rgba(12, 63, 45, 0.07); }
+.cantidad span { min-width: 30px; text-align: center; font-weight: 600; }
+.btn-verde {
+  flex: 1;
+  min-height: 54px;
+  padding: 0 28px;
+  border-radius: var(--radio-pill);
+  background: var(--tema-profundo);
+  border: 1px solid var(--tema-profundo);
+  color: var(--oro-claro);
+  font-weight: 600;
+}
+.btn-verde:hover { background: var(--tema-medio); border-color: var(--tema-medio); transform: translateY(-2px); box-shadow: 0 16px 30px rgba(8, 46, 33, 0.28); }
+
+.producto-stock { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; font-size: 0.85rem; color: var(--gris); }
+.producto-stock:not(:empty)::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--oro);
+  box-shadow: 0 0 0 0 rgba(201, 169, 97, 0.6);
+  animation: pulso 2.4s ease-out infinite;
+}
+@keyframes pulso { to { box-shadow: 0 0 0 10px rgba(201, 169, 97, 0); } }
+
+.link-whatsapp {
+  display: inline-block;
+  margin: 14px 0 0;
+  padding: 10px 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tema-profundo);
+  border-bottom: 1px solid var(--oro);
+  transition: color 0.3s ease, letter-spacing 0.4s var(--ease);
+}
+.link-whatsapp:hover { color: var(--oro-oscuro); letter-spacing: 0.18em; }
+
+/* Garantías: tres tarjetas con icono */
+.producto-garantias { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 34px; }
+.producto-garantias li {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--texto);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(138, 109, 43, 0.22);
+  border-radius: var(--radio);
+}
+.producto-garantias svg { width: 26px; height: 26px; fill: none; stroke: var(--oro-oscuro); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Cuidado de la pieza (acordeón) */
+.producto-cuidado { margin-top: 26px; border-top: 1px solid rgba(138, 109, 43, 0.28); border-bottom: 1px solid rgba(138, 109, 43, 0.28); }
+.producto-cuidado summary {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 0;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--tema-profundo);
+  cursor: pointer;
+  list-style: none;
+}
+.producto-cuidado summary::-webkit-details-marker { display: none; }
+.producto-cuidado summary::after { content: '+'; font-size: 1.3rem; font-weight: 300; transition: transform 0.4s var(--ease); }
+.producto-cuidado[open] summary::after { transform: rotate(45deg); }
+.producto-cuidado p { padding: 0 0 20px; font-size: 0.9rem; color: var(--gris); max-width: 52ch; }
+
+/* =========================================================
+   RELACIONADOS (reutiliza la sección oscura de la colección)
+   ========================================================= */
+.relacionados.coleccion { padding-top: var(--seccion); }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 960px) {
+  .producto-garantias { grid-template-columns: 1fr; }
+  .producto-garantias li { flex-direction: row; text-align: left; padding: 14px 16px; }
+}
+
+@media (max-width: 860px) {
+  body.pagina-interna { --solape-banner: 70px; }
+  .banner-pieza { padding-top: 112px; }
+  .banner-marca { display: none; }
+  .producto-detalle { grid-template-columns: 1fr; gap: 36px; }
+  .producto-galeria { position: relative; top: auto; width: min(100%, 440px); margin: 12px auto; }
+  .producto-info { padding-top: 0; }
+
+  /* Barra de compra pegada al fondo mientras se ve la información */
+  .producto-compra {
+    position: sticky; bottom: 12px; z-index: 20;
+    padding: 8px;
+    background: rgba(245, 240, 232, 0.92);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(138, 109, 43, 0.25);
+    border-radius: var(--radio-pill);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+  }
+  .cantidad { height: 48px; }
+  .btn-verde { min-height: 48px; }
+  .pagina-interna .wa-flotante { bottom: 92px; }
+}
+
+@media (max-width: 480px) {
+  .producto-specs { grid-template-columns: 1fr; }
+  .producto-specs dt { padding-bottom: 0; border-bottom: 0; }
+  .producto-specs dd { padding-top: 4px; border-top: 0; }
+  .producto-colores { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-pieza { animation: none; }
+  .producto-galeria.galeria-simple img { animation: none; }
+}

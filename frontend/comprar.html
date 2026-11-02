@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar compra | Lira Ferrer</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+</head>
+<body class="pagina-interna">
+
+  <!-- ================= NAV ================= -->
+  <header class="nav nav-solida" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/img/logo/lira-emblema.png" alt="Emblema Lira Ferrer">
+      <span>Lira Ferrer</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#coleccion">Colección</a></li>
+        <li><a href="index.html#maison">Historia</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="pagina-main">
+    <div class="contenedor">
+
+      <nav class="migas" aria-label="Ruta de navegación">
+        <a href="index.html">Inicio</a><span>/</span>
+        <a href="index.html#coleccion">Colección</a><span>/</span>
+        <span>Finalizar compra</span>
+      </nav>
+
+      <div class="estado" id="estadoCarga">
+        <span class="spinner"></span>
+        <p>Preparando tu pedido…</p>
+      </div>
+
+      <div class="estado" id="estadoError" hidden>
+        <h2>No hay una pieza seleccionada</h2>
+        <p>La pieza no existe o está agotada. Elige una de la colección para continuar.</p>
+        <a href="index.html#coleccion" class="btn btn-linea">Ver la colección</a>
+      </div>
+
+      <div id="checkout" hidden>
+        <div class="checkout-encabezado">
+          <span class="eyebrow">Compra segura</span>
+          <h1>Finalizar compra</h1>
+        </div>
+
+        <div class="checkout">
+          <!-- ===== FORMULARIO ===== -->
+          <form id="formCompra" novalidate>
+            <div class="alerta" id="alertaForm" role="alert" hidden></div>
+
+            <div class="form-bloque">
+              <h2><span>1</span>Tus datos</h2>
+              <div class="campos">
+                <div class="campo completo" data-campo="nombre">
+                  <label for="nombre">Nombre completo</label>
+                  <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="100">
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo" data-campo="email">
+                  <label for="email">Correo electrónico</label>
+                  <input id="email" name="email" type="email" autocomplete="email" maxlength="150">
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo" data-campo="telefono">
+                  <label for="telefono">Celular / WhatsApp</label>
+                  <input id="telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" maxlength="20" placeholder="300 123 4567">
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo completo" data-campo="documento">
+                  <label for="documento">Cédula o documento</label>
+                  <input id="documento" name="documento" type="text" inputmode="numeric" maxlength="20">
+                  <small class="error-msg"></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-bloque">
+              <h2><span>2</span>Envío</h2>
+              <div class="campos">
+                <div class="campo" data-campo="departamento">
+                  <label for="departamento">Departamento</label>
+                  <select id="departamento" name="departamento">
+                    <option value="">Selecciona…</option>
+                  </select>
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo" data-campo="ciudad">
+                  <label for="ciudad">Ciudad</label>
+                  <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" maxlength="80">
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo completo" data-campo="direccion">
+                  <label for="direccion">Dirección completa</label>
+                  <input id="direccion" name="direccion" type="text" autocomplete="street-address" maxlength="200" placeholder="Calle, número, apartamento, barrio">
+                  <small class="error-msg"></small>
+                </div>
+                <div class="campo completo" data-campo="notas">
+                  <label for="notas">Notas del pedido <span class="opcional">(opcional)</span></label>
+                  <textarea id="notas" name="notas" maxlength="500" placeholder="Mensaje para regalo, horario de entrega…"></textarea>
+                  <small class="error-msg"></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-bloque">
+              <h2><span>3</span>Pago</h2>
+              <div class="metodos" data-campo="metodo_pago">
+                <label class="metodo">
+                  <input type="radio" name="metodo_pago" value="transferencia">
+                  <span>
+                    <strong>Transferencia bancaria</strong>
+                    <small>Te enviamos los datos de la cuenta al confirmar el pedido.</small>
+                  </span>
+                </label>
+                <label class="metodo">
+                  <input type="radio" name="metodo_pago" value="tarjeta">
+                  <span>
+                    <strong>Tarjeta de crédito o débito</strong>
+                    <small>Te enviamos un enlace de pago seguro por WhatsApp o correo.</small>
+                  </span>
+                </label>
+                <label class="metodo">
+                  <input type="radio" name="metodo_pago" value="asesor">
+                  <span>
+                    <strong>Coordinar con una asesora</strong>
+                    <small>Te contactamos para acordar el pago y la entrega.</small>
+                  </span>
+                </label>
+                <small class="error-msg"></small>
+              </div>
+            </div>
+
+            <!-- Antispam: campo invisible -->
+            <div class="honeypot" aria-hidden="true">
+              <label for="empresa">Empresa</label>
+              <input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="campo-check" data-campo="terminos">
+              <label class="check">
+                <input type="checkbox" id="terminos" name="terminos">
+                <span>Acepto los términos de compra y la política de tratamiento de datos personales (Ley 1581 de 2012).</span>
+              </label>
+              <small class="error-msg"></small>
+            </div>
+
+            <button type="submit" class="btn btn-verde btn-enviar" id="btnEnviar">Confirmar pedido</button>
+          </form>
+
+          <!-- ===== RESUMEN ===== -->
+          <aside class="resumen">
+            <h2>Tu pedido</h2>
+            <div class="resumen-pieza">
+              <div class="resumen-img"><img id="rImg" alt=""></div>
+              <div>
+                <h3 id="rNombre"></h3>
+                <p id="rDetalle"></p>
+                <span id="rPrecio"></span>
+              </div>
+            </div>
+
+            <div class="resumen-fila">
+              <span>Cantidad</span>
+              <div class="cantidad cantidad-mini">
+                <button type="button" id="menos" aria-label="Restar">−</button>
+                <span id="rCantidad">1</span>
+                <button type="button" id="mas" aria-label="Sumar">+</button>
+              </div>
+            </div>
+            <div class="resumen-fila"><span>Subtotal</span><span id="rSubtotal"></span></div>
+            <div class="resumen-fila"><span>Envío asegurado</span><span id="rEnvio">Gratis</span></div>
+            <div class="resumen-fila resumen-total"><span>Total</span><span id="rTotal"></span></div>
+
+            <ul class="producto-garantias">
+              <li>Certificado de autenticidad de la esmeralda</li>
+              <li>Estuche y bolsa protectora</li>
+              <li>Entrega en 3 a 5 días hábiles</li>
+            </ul>
+            <p class="resumen-nota">No cobramos nada en este paso. Una asesora te confirmará el pedido y el pago antes del envío.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="franja">
+    <span>Hecho a mano en Colombia</span>
+    <span>Piel genuina certificada</span>
+    <span>Oro y esmeralda auténticos</span>
+    <span>Edición limitada</span>
+  </div>
+
+  <footer class="footer" id="contacto">
+    <a href="index.html" class="footer-logo">Lira Ferrer</a>
+    <ul class="footer-links">
+      <li><a href="index.html#coleccion">Colección</a></li>
+      <li><a href="index.html#maison">La Maison</a></li>
+      <li><a href="index.html#oficios">Oficios</a></li>
+    </ul>
+    <div class="footer-contacto">
+      <a href="#" data-whatsapp="">WhatsApp</a>
+      <span>·</span>
+      <a href="mailto:hola@liraferrer.com">hola@liraferrer.com</a>
+    </div>
+    <p class="footer-copy">© <span id="anio">2026</span> Lira Ferrer · Barranquilla, Colombia · Todos los derechos reservados</p>
+  </footer>
+
+  <script src="assets/js/core/app.js"></script>
+  <script src="assets/js/pages/comprar.js"></script>
+</body>
+</html>

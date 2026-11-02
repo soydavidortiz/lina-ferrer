@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gracias por tu pedido | Lira Ferrer</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+</head>
+<body class="pagina-interna">
+
+  <header class="nav nav-solida" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/img/logo/lira-emblema.png" alt="Emblema Lira Ferrer">
+      <span>Lira Ferrer</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#coleccion">Colección</a></li>
+        <li><a href="index.html#maison">Historia</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="pagina-main">
+    <div class="contenedor">
+      <div class="gracias-caja reveal">
+        <div class="gracias-icono">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+
+        <span class="eyebrow">Pedido recibido</span>
+        <h1>Gracias<span id="gNombre"></span></h1>
+        <p class="gracias-texto">Tu pieza Lira Ferrer ya está reservada. Muy pronto una asesora se comunicará contigo para confirmar el pago y el envío.</p>
+
+        <div class="gracias-codigo" id="gCodigoCaja">
+          <small>Código de pedido</small>
+          <strong id="gCodigo">—</strong>
+        </div>
+
+        <div class="gracias-resumen" id="gResumen" hidden></div>
+
+        <ol class="pasos">
+          <li><div><strong>Confirmación</strong>Te escribimos en menos de 24 horas por WhatsApp o correo.</div></li>
+          <li><div><strong>Preparación</strong>Tu pieza se revisa, se certifica y se empaca en su estuche.</div></li>
+          <li><div><strong>Envío asegurado</strong>La recibes en 3 a 5 días hábiles en cualquier ciudad de Colombia.</div></li>
+        </ol>
+
+        <div class="gracias-acciones">
+          <a href="#" class="btn btn-verde" id="gWhatsapp" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+          <a href="index.html#coleccion" class="btn btn-linea">Volver a la colección</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="franja">
+    <span>Hecho a mano en Colombia</span>
+    <span>Piel genuina certificada</span>
+    <span>Oro y esmeralda auténticos</span>
+    <span>Edición limitada</span>
+  </div>
+
+  <footer class="footer" id="contacto">
+    <a href="index.html" class="footer-logo">Lira Ferrer</a>
+    <ul class="footer-links">
+      <li><a href="index.html#coleccion">Colección</a></li>
+      <li><a href="index.html#maison">La Maison</a></li>
+      <li><a href="index.html#oficios">Oficios</a></li>
+    </ul>
+    <div class="footer-contacto">
+      <a href="#" data-whatsapp="">WhatsApp</a>
+      <span>·</span>
+      <a href="mailto:hola@liraferrer.com">hola@liraferrer.com</a>
+    </div>
+    <p class="footer-copy">© <span id="anio">2026</span> Lira Ferrer · Barranquilla, Colombia · Todos los derechos reservados</p>
+  </footer>
+
+  <script src="assets/js/core/app.js"></script>
+  <script src="assets/js/pages/gracias.js"></script>
+</body>
+</html>
