@@ -52,11 +52,14 @@ if (es_post()) {
     .msg { padding:10px 14px; font-size:.85rem; margin-bottom:20px; }
     .error { background:#fdecec; color:#a33; border-left:3px solid #a33; }
     .aviso { background:#fdf8ec; color:#8a6d1f; border-left:3px solid var(--oro); }
+    .volver { text-align:center; margin-top:20px; font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; }
+    .volver a { color:#777; text-decoration:none; border-bottom:1px solid #ccc; padding-bottom:2px; }
+    .volver a:hover { color:var(--oro); border-color:var(--oro); }
   </style>
 </head>
 <body>
   <form class="caja" method="POST" action="<?= e(url('login.php')) ?>" autocomplete="off">
-    <h1>Lina Ferrer</h1>
+    <h1>Lira Ferrer</h1>
     <p class="sub">Acceso privado</p>
 
     <?php if ($aviso): ?><div class="msg aviso"><?= e($aviso) ?></div><?php endif; ?>
@@ -71,6 +74,7 @@ if (es_post()) {
     <input type="password" id="password" name="password" required>
 
     <button type="submit">Ingresar</button>
+    <p class="volver"><a href="<?= e(frontend_url('index.html')) ?>">← Volver al sitio</a></p>
   </form>
 </body>
 </html>

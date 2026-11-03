@@ -18,6 +18,16 @@ if (!empty($datos['empresa'])) {
     Response::error('Solicitud inválida.', 400);
 }
 
+// ---------- Ajustes de tienda (editables desde el panel) ----------
+$ajustes = (new Sitio())->config();
+$maxUnidades = max(1, (int)($ajustes['max_unidades'] ?? MAX_UNIDADES_POR_PEDIDO));
+$metodosPermitidos = array_values(array_filter(array_map(
+    'trim',
+    explode(',', (string)($ajustes['metodos_pago'] ?? implode(',', METODOS_PAGO)))
+)));
+if (!$metodosPermitidos) $metodosPermitidos = METODOS_PAGO;
+$envioCosto = max(0, (int)($ajustes['envio_costo'] ?? ENVIO_COSTO));
+
 // ---------- Validación ----------
 $v = (new Validator($datos))
     ->requerido('nombre', 'Escribe tu nombre completo.')
@@ -39,9 +49,9 @@ $v = (new Validator($datos))
     ->longitud('notas', 0, 500, 'Las notas admiten máximo 500 caracteres.')
     ->requerido('slug', 'No hay una pieza seleccionada.')
     ->patron('slug', '/^[a-z0-9-]{1,80}$/', 'Pieza inválida.')
-    ->entero('cantidad', 1, MAX_UNIDADES_POR_PEDIDO, 'Cantidad inválida.')
+    ->entero('cantidad', 1, $maxUnidades, 'Cantidad inválida.')
     ->requerido('metodo_pago', 'Elige cómo quieres pagar.')
-    ->enLista('metodo_pago', METODOS_PAGO, 'Método de pago inválido.')
+    ->enLista('metodo_pago', $metodosPermitidos, 'Método de pago inválido.')
     ->aceptado('terminos', 'Debes aceptar los términos para continuar.');
 
 if ($v->falla()) {
@@ -94,7 +104,7 @@ try {
     $clienteId = $clientes->guardar($cliente);
 
     // 5) Calcular totales en el servidor
-    $envio = (int) ENVIO_COSTO;
+    $envio = $envioCosto;
     $total = $producto['precio'] * $cantidad + $envio;
 
     // 6) Crear el pedido
@@ -110,6 +120,20 @@ try {
         'ciudad'          => $cliente['ciudad'],
         'direccion'       => $cliente['direccion'],
         'notas'           => $notas,
+    ]);
+
+    // Detalle del pedido (para el panel y futuras facturas)
+    $db->prepare(
+        'INSERT INTO pedido_items
+            (pedido_id, producto_id, nombre_producto, precio_unitario, cantidad, subtotal)
+         VALUES (?, ?, ?, ?, ?, ?)'
+    )->execute([
+        $nuevo['id'],
+        $producto['id'],
+        $producto['nombre'],
+        $producto['precio'],
+        $cantidad,
+        $producto['precio'] * $cantidad,
     ]);
 
     $db->commit();
@@ -132,5 +156,5 @@ Response::ok([
     'envio'       => $envio,
     'total'       => $total,
     'metodo_pago' => $v->get('metodo_pago'),
-    'whatsapp'    => WHATSAPP,
+    'whatsapp'    => $ajustes['whatsapp'] ?? WHATSAPP,
 ], 201);

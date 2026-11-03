@@ -1,10 +1,10 @@
 /* =========================================================
    LIRA FERRER — gracias.js
    ========================================================= */
-(function () {
+(async function () {
   'use strict';
   const L = window.Lira;
-  L.iniciarLayout();
+  await L.iniciarLayout();
 
   const $ = id => document.getElementById(id);
   const codigoUrl = L.param('codigo') || '';

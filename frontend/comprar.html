@@ -1,24 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finalizar compra | Lira Ferrer</title>
+  <meta name="description" content="Finaliza tu pedido Lira Ferrer: datos de envío, forma de pago y confirmación con una asesora.">
   <meta name="robots" content="noindex">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=15">
+  <link rel="stylesheet" href="assets/css/paginas.css?v=15">
 </head>
-<body class="pagina-interna">
+<body class="pagina-interna pagina-checkout">
 
   <!-- ================= NAV ================= -->
   <header class="nav nav-solida" id="nav">
     <a href="index.html" class="nav-logo">
-      <img src="assets/img/logo/lira-emblema.png" alt="Emblema Lira Ferrer">
+      <img src="assets/img/logo/lira-emblema.webp" alt="Emblema Lira Ferrer">
       <span>Lira Ferrer</span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
@@ -27,7 +28,9 @@
     <nav>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html#coleccion">Colección</a></li>
-        <li><a href="index.html#maison">Historia</a></li>
+        <li><a href="index.html#prensa">Prensa</a></li>
+        <li><a href="index.html#filosofia">Filosofía</a></li>
+        <li><a href="index.html#faq">Preguntas</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
@@ -121,21 +124,21 @@
             <div class="form-bloque">
               <h2><span>3</span>Pago</h2>
               <div class="metodos" data-campo="metodo_pago">
-                <label class="metodo">
+                <label class="metodo" data-metodo="transferencia">
                   <input type="radio" name="metodo_pago" value="transferencia">
                   <span>
                     <strong>Transferencia bancaria</strong>
                     <small>Te enviamos los datos de la cuenta al confirmar el pedido.</small>
                   </span>
                 </label>
-                <label class="metodo">
+                <label class="metodo" data-metodo="tarjeta">
                   <input type="radio" name="metodo_pago" value="tarjeta">
                   <span>
                     <strong>Tarjeta de crédito o débito</strong>
                     <small>Te enviamos un enlace de pago seguro por WhatsApp o correo.</small>
                   </span>
                 </label>
-                <label class="metodo">
+                <label class="metodo" data-metodo="asesor">
                   <input type="radio" name="metodo_pago" value="asesor">
                   <span>
                     <strong>Coordinar con una asesora</strong>
@@ -188,9 +191,9 @@
             <div class="resumen-fila resumen-total"><span>Total</span><span id="rTotal"></span></div>
 
             <ul class="producto-garantias">
-              <li>Certificado de autenticidad de la esmeralda</li>
-              <li>Estuche y bolsa protectora</li>
-              <li>Entrega en 3 a 5 días hábiles</li>
+              <li id="cGarantia1"></li>
+              <li id="cGarantia2"></li>
+              <li id="cGarantia3"></li>
             </ul>
             <p class="resumen-nota">No cobramos nada en este paso. Una asesora te confirmará el pedido y el pago antes del envío.</p>
           </aside>
@@ -207,21 +210,41 @@
   </div>
 
   <footer class="footer" id="contacto">
-    <a href="index.html" class="footer-logo">Lira Ferrer</a>
-    <ul class="footer-links">
-      <li><a href="index.html#coleccion">Colección</a></li>
-      <li><a href="index.html#maison">La Maison</a></li>
-      <li><a href="index.html#oficios">Oficios</a></li>
-    </ul>
-    <div class="footer-contacto">
-      <a href="#" data-whatsapp="">WhatsApp</a>
-      <span>·</span>
-      <a href="mailto:hola@liraferrer.com">hola@liraferrer.com</a>
+    <div class="contenedor footer-grid">
+      <div class="footer-marca">
+        <a href="index.html" class="footer-logo" data-sitio="marca_nombre">Lira Ferrer</a>
+        <p data-sitio="footer_texto"></p>
+        <p class="footer-direccion" data-sitio="direccion"></p>
+      </div>
+
+      <nav aria-label="Pie de página">
+        <h2>Explorar</h2>
+        <ul class="footer-links">
+          <li><a href="index.html#coleccion">Colección</a></li>
+          <li><a href="index.html#prensa">Prensa</a></li>
+          <li><a href="index.html#filosofia">Filosofía</a></li>
+          <li><a href="index.html#faq">Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-contacto">
+        <h2>Contacto</h2>
+        <a href="#" data-whatsapp>WhatsApp</a>
+        <a href="#" data-sitio-mail></a>
+        <a href="#" data-sitio-instagram hidden>Instagram</a>
+        <a href="#" data-sitio-tel></a>
+      </div>
     </div>
-    <p class="footer-copy">© <span id="anio">2026</span> Lira Ferrer · Barranquilla, Colombia · Todos los derechos reservados</p>
+
+    <p class="footer-copy">© <span id="anio">2026</span> <span data-sitio="marca_nombre"></span> · <span data-sitio="marca_ciudad"></span> · Todos los derechos reservados</p>
   </footer>
 
-  <script src="assets/js/core/app.js"></script>
-  <script src="assets/js/pages/comprar.js"></script>
+  <a href="#" class="wa-flotante" id="waFlotante" data-whatsapp target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span class="wa-texto">Escríbenos</span>
+  </a>
+
+  <script src="assets/js/core/app.js?v=15"></script>
+  <script src="assets/js/pages/comprar.js?v=15"></script>
 </body>
 </html>

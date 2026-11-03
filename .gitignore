@@ -1,0 +1,26 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Entornos y secretos locales
+.env
+.env.*
+!.env.example
+
+# Respaldos y duplicados
+frontend/_respaldo/
+*.bak
+* copy*.css
+
+# Imágenes originales pesadas: el sitio usa WebP
+frontend/assets/img/**/*.png
+
+# Imágenes subidas desde el panel
+frontend/assets/img/uploads/*
+!frontend/assets/img/uploads/.htaccess
+
+# Dependencias
+node_modules/
+vendor/

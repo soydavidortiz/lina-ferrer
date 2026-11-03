@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#082e21">
   <title>Lira Ferrer | Alta marroquinería colombiana</title>
-  <meta name="description" content="Lira Ferrer: alta marroquinería colombiana. Carteras hechas a mano con piel genuina, lira en filigrana de oro y esmeralda colombiana certificada.">
+  <meta name="description" id="metaDescripcion" content="Carteras Lira Ferrer: alta marroquinería colombiana con esmeralda certificada, lira en filigrana de oro y trabajo artesanal.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" id="ogTitulo" content="Lira Ferrer">
+  <meta property="og:description" id="ogDescripcion" content="">
+  <meta property="og:image" id="ogImagen" content="">
 
-  <!-- Las animaciones de aparición solo se activan si hay JavaScript -->
   <script>document.documentElement.classList.add('js');</script>
 
   <!-- Fuentes -->
@@ -15,8 +18,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=15">
+  <link rel="stylesheet" href="assets/css/secciones.css?v=15">
 </head>
 <body>
 
@@ -26,8 +29,8 @@
   <!-- ================= NAV ================= -->
   <header class="nav" id="nav">
     <a href="#inicio" class="nav-logo" aria-label="Lira Ferrer, inicio">
-      <img src="assets/img/logo/lira-emblema.png" alt="" width="40" height="40">
-      <span>Lira Ferrer</span>
+      <img src="assets/img/logo/lira-emblema.webp" alt="" width="40" height="60">
+      <span data-sitio="marca_nombre">Lira Ferrer</span>
     </a>
 
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-controls="navLinks">
@@ -37,282 +40,262 @@
     <nav aria-label="Principal">
       <ul class="nav-links" id="navLinks">
         <li><a href="#coleccion">Colección</a></li>
-        <li><a href="#maison">Historia</a></li>
+        <li><a href="#prensa">Prensa</a></li>
+        <li><a href="#filosofia">Filosofía</a></li>
+        <li><a href="#faq">Preguntas</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-  <!-- ================= HERO ================= -->
-  <section class="hero" id="inicio">
-    <div class="hero-foto">
-      <img src="assets/img/hero/hero-modelo.png" alt="Modelo sosteniendo el bolso Perla Eterna" fetchpriority="high" decoding="async">
-    </div>
-
-    <span class="hero-marca-agua" aria-hidden="true">Lira Ferrer</span>
-
-    <div class="hero-texto">
-      <span class="eyebrow eyebrow-oro">Edición limitada · Colombia</span>
-      <h1>
-        La joya
-        <small>que se lleva <strong>Lira Ferrer</strong></small>
-      </h1>
-      <p class="hero-sub"><span>Alta marroquinería</span> colombiana</p>
-      <a href="#coleccion" class="btn btn-pill">
-        Descubre la joya dentro de ti
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- ================= INTRO =================
-       Columna izquierda: texto + esmeraldas como cierre.
-       Columna derecha: bolso rotatorio (sobresale del hero) + ficha debajo.
-       El bolso va EN el flujo de la columna, así la ficha nunca se encima. -->
-  <section class="intro">
-    <div class="contenedor intro-grid">
-
-      <div class="intro-texto reveal">
-        <span class="eyebrow">La pieza</span>
-        <h2>Una joya que se lleva en la mano</h2>
-        <p>Cada Lira Ferrer nace de piel de vacuno de primera calidad, teñida con pigmentos vegetales y trenzada a mano en el Caribe colombiano. En el centro, una lira en filigrana de oro custodia una esmeralda certificada: la firma de la casa.</p>
-        <p>Piezas pensadas para durar generaciones, para quien entiende que el verdadero lujo es el que tiene historia.</p>
-
-        <div class="intro-cierre" aria-hidden="true">
-          <img class="intro-esmeraldas" src="assets/img/decor/esmeraldas.png" alt="" loading="lazy" decoding="async">
-          <span class="intro-linea"></span>
-        </div>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="inicio">
+      <div class="hero-foto">
+        <img id="heroImagen" alt="" fetchpriority="high" decoding="async">
       </div>
 
-      <div class="intro-derecha">
-        <!-- Rotación de bolsos: cada 15 s se funde al siguiente (CSS puro) -->
-        <div class="intro-bolso">
-          <img src="assets/img/bolsos/bolso-blanco.png" alt="Bolsos Lira Ferrer con lira de oro y esmeralda" decoding="async">
-          <img src="assets/img/bolsos/bolso-verde.png" alt="" aria-hidden="true" decoding="async">
-          <img src="assets/img/bolsos/bolso-vinotinto.png" alt="" aria-hidden="true" decoding="async">
-        </div>
+      <span class="hero-marca-agua" aria-hidden="true">Lira Ferrer</span>
 
-        <aside class="intro-ficha reveal" aria-label="Ficha de la pieza">
-          <span class="eyebrow eyebrow-oro">Ficha de la pieza</span>
-          <dl>
-            <div><dt>Origen</dt><dd>Barranquilla, Colombia</dd></div>
-            <div><dt>Piel</dt><dd>Vacuno de primera calidad, trenzado a mano</dd></div>
-            <div><dt>Lira</dt><dd>Filigrana de oro</dd></div>
-            <div><dt>Gema</dt><dd>Esmeralda colombiana certificada</dd></div>
-          </dl>
-        </aside>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================= GALERÍA ================= -->
-  <section class="galeria" aria-label="Galería">
-    <div class="galeria-grid">
-      <figure class="galeria-item reveal">
-        <img src="assets/img/galeria/galeria-1.png" alt="Modelo con vestido blanco y bolso Lira Ferrer" loading="lazy" decoding="async">
-      </figure>
-      <figure class="galeria-item reveal">
-        <img src="assets/img/galeria/galeria-2.png" alt="Modelo sosteniendo el bolso Lira Ferrer" loading="lazy" decoding="async">
-      </figure>
-    </div>
-  </section>
-
-  <!-- ================= MANIFIESTO ================= -->
-  <section class="manifiesto">
-    <div class="contenedor-angosto reveal">
-      <span class="ornamento" aria-hidden="true"></span>
-      <h2>No fabricamos accesorios. Heredamos oficios.</h2>
-      <p>Detrás de cada bolso hay talabarteros, orfebres y lapidarios que llevan generaciones perfeccionando su arte. Lira Ferrer los reúne en una sola pieza.</p>
-    </div>
-  </section>
-
-  <!-- ================= COLECCIÓN ================= -->
-  <section class="coleccion" id="coleccion">
-    <div class="titulo-seccion reveal">
-      <span class="eyebrow">La colección</span>
-      <h2>Tres piezas, una herencia</h2>
-      <p>Cada cartera es única: piel de vacuno de primera calidad, trenzado a mano y la lira en filigrana de oro coronada con esmeralda colombiana certificada.</p>
-    </div>
-
-    <!-- Se muestra tal cual; si la API responde, JS lo reemplaza con los datos reales -->
-    <div class="coleccion-grid" id="coleccionGrid">
-      <article class="pieza reveal">
-        <a href="producto.html?slug=herencia-borgona" class="pieza-img" aria-label="Ver Herencia Borgoña">
-          <img src="assets/img/bolsos/bolso-vinotinto.png" alt="Herencia Borgoña" loading="lazy" decoding="async">
-        </a>
-        <div class="pieza-info">
-          <h3>Herencia Borgoña</h3>
-          <p class="pieza-detalle">Vino tinto · Lira en filigrana de oro con esmeralda</p>
-          <span class="pieza-precio">$2.850.000 COP</span>
-          <a href="producto.html?slug=herencia-borgona" class="btn btn-linea">Ver pieza</a>
-        </div>
-      </article>
-
-      <article class="pieza reveal">
-        <a href="producto.html?slug=perla-eterna" class="pieza-img" aria-label="Ver Perla Eterna">
-          <img src="assets/img/bolsos/bolso-blanco.png" alt="Perla Eterna" loading="lazy" decoding="async">
-        </a>
-        <div class="pieza-info">
-          <h3>Perla Eterna</h3>
-          <p class="pieza-detalle">Blanco perla · Lira en filigrana de oro con esmeralda</p>
-          <span class="pieza-precio">$2.850.000 COP</span>
-          <a href="producto.html?slug=perla-eterna" class="btn btn-linea">Ver pieza</a>
-        </div>
-      </article>
-
-      <!-- NOMBRE Y SLUG PROVISIONALES: cámbialos por los reales del bolso verde -->
-      <article class="pieza reveal">
-        <a href="producto.html?slug=selva-viva" class="pieza-img" aria-label="Ver Selva Viva">
-          <img src="assets/img/bolsos/bolso-verde.png" alt="Selva Viva" loading="lazy" decoding="async">
-        </a>
-        <div class="pieza-info">
-          <h3>Selva Viva</h3>
-          <p class="pieza-detalle">Verde oliva · Lira en filigrana de oro con esmeralda</p>
-          <span class="pieza-precio">$2.850.000 COP</span>
-          <a href="producto.html?slug=selva-viva" class="btn btn-linea">Ver pieza</a>
-        </div>
-      </article>
-    </div>
-
-    <!-- Asesoría: el enlace de WhatsApp lo copia efectos.js desde el del footer -->
-    <div class="coleccion-ayuda reveal" hidden>
-      <h3>¿No sabes cuál elegir?</h3>
-      <p>Escríbenos y te ayudamos a encontrar la pieza que va contigo.</p>
-      <a href="#" id="linkWhatsapp2" class="btn btn-pill" target="_blank" rel="noopener">Hablar con una asesora</a>
-    </div>
-  </section>
-
-  <!-- ================= LA MAISON ================= -->
-  <section class="maison" id="maison">
-    <div class="contenedor maison-grid reveal">
-      <div>
-        <span class="eyebrow">La Maison</span>
-        <h2>Nacida en el Caribe, forjada por manos maestras</h2>
-      </div>
-      <p>Lira Ferrer rinde homenaje a los oficios ancestrales de Colombia: la talabartería, la marroquinería, la joyería en filigrana y el arte de las esmeraldas. Piezas utilitarias que trascienden generaciones.</p>
-    </div>
-  </section>
-
-  <!-- ================= SAVOIR FAIRE ================= -->
-  <section class="oficios" id="oficios">
-    <div class="contenedor">
-      <div class="oficios-cabecera reveal">
-        <span class="eyebrow eyebrow-oro">Savoir faire</span>
-        <h3 class="oficios-titulo">Cuatro oficios, una sola pieza</h3>
-      </div>
-
-      <div class="oficios-grid">
-        <div class="oficio reveal">
-          <div class="oficio-icono">
-            <!-- Talabartería -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9c0-2 1.5-3 3-3h1l1-2h6l1 2h1c1.5 0 3 1 3 3v2c0 1-.5 2-1.5 2.5L18 18h-2l-.5-3h-7L8 18H6l-.5-4.5C4.5 13 4 12 4 11z"/></svg>
-          </div>
-          <h4>Talabartería</h4>
-          <p>Piel de vacuno seleccionada, teñida con tintes vegetales ecológicos.</p>
-        </div>
-
-        <div class="oficio reveal">
-          <div class="oficio-icono">
-            <!-- Trenzado -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3c4 3 4 6 0 9s-4 6 0 9M16 3c-4 3-4 6 0 9s4 6 0 9"/></svg>
-          </div>
-          <h4>Trenzado a mano</h4>
-          <p>Asas y bordes trenzados por artesanos marroquineros colombianos.</p>
-        </div>
-
-        <div class="oficio reveal">
-          <div class="oficio-icono">
-            <!-- Filigrana -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <h4>Filigrana de oro</h4>
-          <p>La lira, símbolo de la casa, tejida en hilos de oro por orfebres.</p>
-        </div>
-
-        <div class="oficio reveal">
-          <div class="oficio-icono">
-            <!-- Esmeralda -->
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10l4 5-9 11L3 9z"/></svg>
-          </div>
-          <h4>Esmeralda</h4>
-          <p>Gema colombiana certificada, corazón de cada pieza.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CTA FINAL ================= -->
-  <section class="cta-final" aria-labelledby="ctaTitulo">
-    <div class="contenedor-angosto reveal">
-      <span class="eyebrow eyebrow-claro">Lira Ferrer</span>
-      <h2 id="ctaTitulo">Descubre la joya <em>dentro de ti</em></h2>
-      <p>Cada pieza es de edición limitada y está hecha a mano en Colombia. Escríbenos y te ayudamos a elegir la tuya.</p>
-      <div class="cta-acciones">
-        <a href="#coleccion" class="btn btn-oscuro">
-          Ver la colección
+      <div class="hero-texto">
+        <span class="eyebrow eyebrow-oro" id="heroEtiqueta"></span>
+        <h1>
+          <span id="heroTitulo"></span>
+          <small><span id="heroPequeno"></span> <strong id="heroDestacado"></strong></small>
+        </h1>
+        <p class="hero-sub" id="heroSub"></p>
+        <a href="#coleccion" class="btn btn-pill" id="heroCta">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="mailto:hola@liraferrer.com" class="enlace-sutil">hola@liraferrer.com</a>
       </div>
-    </div>
-  </section>
-  </main>
+    </section>
 
-  <!-- ================= FRANJA SELLOS (marquesina) ================= -->
-  <div class="franja" aria-label="Sellos de calidad">
-    <div class="franja-track">
-      <div class="franja-grupo">
-        <span>Hecho a mano en Colombia</span>
-        <span>Piel genuina certificada</span>
-        <span>Oro y esmeralda auténticos</span>
-        <span>Edición limitada</span>
-      </div>
-      <div class="franja-grupo" aria-hidden="true">
-        <span>Hecho a mano en Colombia</span>
-        <span>Piel genuina certificada</span>
-        <span>Oro y esmeralda auténticos</span>
-        <span>Edición limitada</span>
-      </div>
+    <!-- ================= SELLOS (marquesina) ================= -->
+    <div class="franja" aria-label="Sellos de calidad">
+      <div class="franja-track" id="franjaTrack"></div>
     </div>
-  </div>
+
+    <!-- ================= LA PIEZA ================= -->
+    <section class="intro">
+      <div class="contenedor intro-grid">
+        <div class="intro-texto reveal">
+          <span class="eyebrow" id="introEtiqueta"></span>
+          <h2 id="introTitulo"></h2>
+          <p id="introTexto1"></p>
+          <p id="introTexto2"></p>
+
+          <div class="intro-cierre" aria-hidden="true">
+            <img class="intro-esmeraldas" src="assets/img/decor/esmeraldas.webp" alt="" loading="lazy" decoding="async">
+            <span class="intro-linea"></span>
+          </div>
+        </div>
+
+        <div class="intro-derecha">
+          <div class="intro-bolso" id="introBolso"></div>
+
+          <aside class="intro-ficha reveal" aria-label="Ficha de la pieza">
+            <span class="eyebrow eyebrow-oro" id="introFichaTitulo"></span>
+            <dl id="introFicha"></dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GALERÍA ================= -->
+    <section class="galeria" aria-label="Galería">
+      <div class="galeria-grid">
+        <figure class="galeria-item reveal">
+          <img id="galeria1" alt="" loading="lazy" decoding="async">
+        </figure>
+        <figure class="galeria-item reveal">
+          <img id="galeria2" alt="" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= MANIFIESTO ================= -->
+    <section class="manifiesto" id="manifiesto">
+      <div class="contenedor-angosto reveal">
+        <span class="ornamento" aria-hidden="true"></span>
+        <span class="eyebrow" id="manifiestoEtiqueta"></span>
+        <h2 id="manifiestoTitulo"></h2>
+        <p id="manifiestoTexto"></p>
+
+        <details class="manifiesto-completo">
+          <summary>
+            <span id="manifiestoLeer">Leer el manifiesto completo</span>
+            <span class="mas" aria-hidden="true">+</span>
+          </summary>
+          <div class="manifiesto-idiomas" role="group" aria-label="Idioma del manifiesto">
+            <button type="button" data-idioma="es" class="activo">Español</button>
+            <button type="button" data-idioma="en">English</button>
+          </div>
+          <div class="manifiesto-largo" id="manifiestoCompleto"></div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ================= COLECCIÓN ================= -->
+    <section class="coleccion" id="coleccion">
+      <div class="titulo-seccion reveal">
+        <span class="eyebrow" id="coleccionEtiqueta"></span>
+        <h2 id="coleccionTitulo"></h2>
+        <p id="coleccionTexto"></p>
+      </div>
+
+      <div class="coleccion-grid" id="coleccionGrid" aria-live="polite"></div>
+      <p class="estado-carga" id="coleccionEstado">Cargando piezas…</p>
+
+      <div class="coleccion-ayuda reveal" id="coleccionAyuda" hidden>
+        <h3 id="ayudaTitulo"></h3>
+        <p id="ayudaTexto"></p>
+        <a href="#" class="btn btn-pill" data-whatsapp id="ayudaBoton"></a>
+      </div>
+    </section>
+
+    <!-- ================= FILOSOFÍA ================= -->
+    <section class="filosofia" id="filosofia">
+      <div class="contenedor">
+        <div class="filosofia-cabecera reveal">
+          <div class="filosofia-texto">
+            <span class="eyebrow eyebrow-oro" id="filosofiaEtiqueta"></span>
+            <h2 id="filosofiaTitulo"></h2>
+            <p id="filosofiaTexto"></p>
+          </div>
+          <figure class="filosofia-foto">
+            <img id="filosofiaImagen" alt="" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="pilares-grid" id="pilaresGrid"></div>
+
+        <p class="filosofia-sostenible reveal" id="filosofiaSostenible"></p>
+        <p class="filosofia-cita reveal" id="filosofiaCita"></p>
+      </div>
+    </section>
+
+    <!-- ================= HISTORIA ================= -->
+    <section class="historia" id="historia">
+      <div class="contenedor historia-grid">
+        <figure class="historia-foto reveal">
+          <img id="historiaImagen" alt="" loading="lazy" decoding="async">
+        </figure>
+
+        <div class="historia-texto reveal">
+          <span class="eyebrow" id="historiaEtiqueta"></span>
+          <h2 id="historiaTitulo"></h2>
+          <p id="historiaTexto1"></p>
+          <p id="historiaTexto2"></p>
+          <blockquote id="historiaCita"></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TRAYECTORIA ================= -->
+    <section class="trayectoria" aria-labelledby="hitosTitulo">
+      <div class="contenedor">
+        <h2 class="trayectoria-titulo reveal" id="hitosTitulo"></h2>
+        <ol class="trayectoria-lista" id="hitosLista"></ol>
+      </div>
+    </section>
+
+    <!-- ================= PRENSA ================= -->
+    <section class="prensa" id="prensa">
+      <div class="titulo-seccion reveal">
+        <span class="eyebrow" id="prensaEtiqueta"></span>
+        <h2 id="prensaTitulo"></h2>
+        <p id="prensaTexto"></p>
+      </div>
+
+      <div class="prensa-grid" id="prensaGrid"></div>
+
+      <div class="prensa-enlace reveal" id="prensaEnlaceCaja" hidden>
+        <a id="prensaEnlace" target="_blank" rel="noopener"></a>
+      </div>
+    </section>
+
+    <!-- ================= RECONOCIMIENTOS ================= -->
+    <section class="reconocimientos" aria-labelledby="reconocimientosTitulo">
+      <div class="contenedor">
+        <div class="reconocimientos-cabecera reveal">
+          <span class="eyebrow" id="reconocimientosEtiqueta"></span>
+          <h2 id="reconocimientosTitulo"></h2>
+        </div>
+        <div class="reconocimientos-grid" id="reconocimientosGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================= PREGUNTAS FRECUENTES ================= -->
+    <section class="faq" id="faq">
+      <div class="contenedor faq-grid">
+        <div class="faq-intro reveal">
+          <span class="eyebrow" id="faqEtiqueta"></span>
+          <h2 id="faqTitulo"></h2>
+          <p id="faqTexto"></p>
+          <a href="#" class="btn btn-pill" data-whatsapp id="faqBoton"></a>
+        </div>
+        <div class="faq-lista" id="faqLista"></div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta-final" aria-labelledby="ctaTitulo">
+      <div class="contenedor-angosto reveal">
+        <span class="eyebrow eyebrow-claro" id="ctaEtiqueta"></span>
+        <h2 id="ctaTitulo"></h2>
+        <p id="ctaTexto"></p>
+        <div class="cta-acciones">
+          <a href="#coleccion" class="btn btn-oscuro" id="ctaBoton">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#" class="enlace-sutil" data-sitio-mail></a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- ================= FOOTER ================= -->
   <footer class="footer" id="contacto">
     <div class="contenedor footer-grid">
       <div class="footer-marca">
-        <a href="#inicio" class="footer-logo">Lira Ferrer</a>
-        <p>Alta marroquinería colombiana, hecha a mano en Barranquilla.</p>
+        <a href="#inicio" class="footer-logo" data-sitio="marca_nombre">Lira Ferrer</a>
+        <p data-sitio="footer_texto"></p>
+        <p class="footer-direccion" data-sitio="direccion"></p>
       </div>
 
       <nav aria-label="Pie de página">
-        <h4>Explorar</h4>
+        <h2>Explorar</h2>
         <ul class="footer-links">
           <li><a href="#coleccion">Colección</a></li>
-          <li><a href="#maison">La Maison</a></li>
-          <li><a href="#oficios">Oficios</a></li>
+          <li><a href="#prensa">Prensa</a></li>
+          <li><a href="#filosofia">Filosofía</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
         </ul>
       </nav>
 
       <div class="footer-contacto">
-        <h4>Contacto</h4>
-        <a href="#" id="linkWhatsapp" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="mailto:hola@liraferrer.com">hola@liraferrer.com</a>
+        <h2>Contacto</h2>
+        <a href="#" data-whatsapp>WhatsApp</a>
+        <a href="#" data-sitio-mail></a>
+        <a href="#" data-sitio-instagram hidden>Instagram</a>
+        <a href="#" data-sitio-tel></a>
       </div>
     </div>
 
-    <p class="footer-copy">© <span id="anio">2026</span> Lira Ferrer · Barranquilla, Colombia · Todos los derechos reservados</p>
+    <p class="footer-copy">© <span id="anio">2026</span> <span data-sitio="marca_nombre"></span> · <span data-sitio="marca_ciudad"></span> · Todos los derechos reservados</p>
   </footer>
 
-  <!-- WhatsApp flotante (se muestra solo si el enlace del footer está configurado) -->
-  <a href="#" id="waFlotante" class="wa-flotante" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" hidden>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <!-- WhatsApp flotante, a la izquierda -->
+  <a href="#" id="waFlotante" class="wa-flotante" data-whatsapp target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span class="wa-texto">Escríbenos</span>
   </a>
 
-  <!-- JS -->
-  <script src="assets/js/pages/index.js"></script>
-  <script src="assets/js/pages/piezas-locales.js"></script>
-  <script src="assets/js/pages/efectos.js"></script>
+  <noscript>
+    <div class="sin-js">Activa JavaScript para ver la colección, la prensa y la historia de Lira Ferrer.</div>
+  </noscript>
+
+  <script src="assets/js/core/app.js?v=15"></script>
+  <script src="assets/js/pages/inicio.js?v=15"></script>
 </body>
 </html>

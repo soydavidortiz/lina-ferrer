@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 
+// URL pública del frontend (hermana de /backend)
+define('FRONTEND_URL', preg_replace('#/backend/?$#', '/frontend', BASE_URL));
+
 date_default_timezone_set(APP_ZONA_HORARIA);
 
 // ===== Errores =====

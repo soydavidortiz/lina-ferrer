@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#082e21">
   <title>Pieza | Lira Ferrer</title>
-  <meta name="description" content="Carteras Lira Ferrer: piel genuina trenzada a mano, lira en filigrana de oro y esmeralda colombiana certificada.">
+  <meta name="description" id="metaDescripcion" content="Carteras Lira Ferrer: piel genuina trenzada a mano, lira en filigrana de oro y esmeralda colombiana certificada.">
 
   <script>document.documentElement.classList.add('js');</script>
 
@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=15">
+  <link rel="stylesheet" href="assets/css/paginas.css?v=15">
 </head>
 <body class="pagina-interna">
 
@@ -24,8 +24,8 @@
   <!-- ================= NAV ================= -->
   <header class="nav nav-solida" id="nav">
     <a href="index.html" class="nav-logo" aria-label="Lira Ferrer, inicio">
-      <img src="assets/img/logo/lira-emblema.png" alt="" width="40" height="40">
-      <span>Lira Ferrer</span>
+      <img src="assets/img/logo/lira-emblema.webp" alt="" width="40" height="60">
+      <span data-sitio="marca_nombre">Lira Ferrer</span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-controls="navLinks">
       <span></span><span></span><span></span>
@@ -33,13 +33,15 @@
     <nav aria-label="Principal">
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html#coleccion">Colección</a></li>
-        <li><a href="index.html#maison">Historia</a></li>
+        <li><a href="index.html#prensa">Prensa</a></li>
+        <li><a href="index.html#filosofia">Filosofía</a></li>
+        <li><a href="index.html#faq">Preguntas</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ================= BANNER ANIMADO (cambia de paleta según la pieza) ================= -->
+  <!-- ================= BANNER ANIMADO ================= -->
   <section class="banner-pieza" aria-label="Pieza">
     <span class="banner-arco" aria-hidden="true"></span>
     <span class="banner-arco" aria-hidden="true"></span>
@@ -55,12 +57,8 @@
 
     <div class="banner-cinta franja" aria-hidden="true">
       <div class="franja-track">
-        <div class="franja-grupo">
-          <span>Edición limitada</span><span>Hecha a mano en Colombia</span><span>Esmeralda certificada</span><span>Filigrana de oro</span>
-        </div>
-        <div class="franja-grupo">
-          <span>Edición limitada</span><span>Hecha a mano en Colombia</span><span>Esmeralda certificada</span><span>Filigrana de oro</span>
-        </div>
+        <div class="franja-grupo" data-sitio-cinta></div>
+        <div class="franja-grupo" data-sitio-cinta aria-hidden="true"></div>
       </div>
     </div>
   </section>
@@ -69,20 +67,17 @@
   <main class="pagina-main">
     <div class="contenedor">
 
-      <!-- Cargando -->
       <div class="estado" id="estadoCarga">
         <span class="spinner"></span>
         <p>Cargando pieza…</p>
       </div>
 
-      <!-- No encontrada -->
       <div class="estado" id="estadoError" hidden>
         <h2>Pieza no encontrada</h2>
         <p>La pieza que buscas no existe o ya no está disponible.</p>
         <a href="index.html#coleccion" class="btn btn-linea">Ver la colección</a>
       </div>
 
-      <!-- Producto -->
       <article class="producto-detalle" id="productoDetalle" hidden>
         <div class="producto-galeria" id="productoGaleria"></div>
 
@@ -113,21 +108,21 @@
           <ul class="producto-garantias">
             <li>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              Envío asegurado gratis a toda Colombia
+              <span id="garantia1"></span>
             </li>
             <li>
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="7"/><path d="M8.2 13.9 7 23l5-3 5 3-1.2-9.1"/></svg>
-              Certificado de autenticidad de la esmeralda
+              <span id="garantia2"></span>
             </li>
             <li>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/></svg>
-              Estuche y bolsa protectora Lira Ferrer
+              <span id="garantia3"></span>
             </li>
           </ul>
 
           <details class="producto-cuidado">
             <summary>Cuidado de tu pieza</summary>
-            <p>Guárdala en su bolsa protectora, lejos de la humedad y del sol directo. Límpiala con un paño suave y seco, y evita el contacto prolongado con perfumes o líquidos sobre la piel y la filigrana.</p>
+            <p id="pCuidado"></p>
           </details>
         </div>
       </article>
@@ -146,18 +141,8 @@
   <!-- ================= FRANJA ================= -->
   <div class="franja" aria-label="Sellos de calidad">
     <div class="franja-track">
-      <div class="franja-grupo">
-        <span>Hecho a mano en Colombia</span>
-        <span>Piel genuina certificada</span>
-        <span>Oro y esmeralda auténticos</span>
-        <span>Edición limitada</span>
-      </div>
-      <div class="franja-grupo" aria-hidden="true">
-        <span>Hecho a mano en Colombia</span>
-        <span>Piel genuina certificada</span>
-        <span>Oro y esmeralda auténticos</span>
-        <span>Edición limitada</span>
-      </div>
+      <div class="franja-grupo" data-sitio-cinta></div>
+      <div class="franja-grupo" data-sitio-cinta aria-hidden="true"></div>
     </div>
   </div>
 
@@ -165,39 +150,41 @@
   <footer class="footer" id="contacto">
     <div class="contenedor footer-grid">
       <div class="footer-marca">
-        <a href="index.html" class="footer-logo">Lira Ferrer</a>
-        <p>Alta marroquinería colombiana, hecha a mano en Barranquilla.</p>
+        <a href="index.html" class="footer-logo" data-sitio="marca_nombre">Lira Ferrer</a>
+        <p data-sitio="footer_texto"></p>
+        <p class="footer-direccion" data-sitio="direccion"></p>
       </div>
 
       <nav aria-label="Pie de página">
-        <h4>Explorar</h4>
+        <h2>Explorar</h2>
         <ul class="footer-links">
           <li><a href="index.html#coleccion">Colección</a></li>
-          <li><a href="index.html#maison">La Maison</a></li>
-          <li><a href="index.html#oficios">Oficios</a></li>
+          <li><a href="index.html#prensa">Prensa</a></li>
+          <li><a href="index.html#filosofia">Filosofía</a></li>
+          <li><a href="index.html#faq">Preguntas frecuentes</a></li>
         </ul>
       </nav>
 
       <div class="footer-contacto">
-        <h4>Contacto</h4>
-        <a href="#" data-whatsapp="" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="mailto:hola@liraferrer.com">hola@liraferrer.com</a>
+        <h2>Contacto</h2>
+        <a href="#" data-whatsapp>WhatsApp</a>
+        <a href="#" data-sitio-mail></a>
+        <a href="#" data-sitio-instagram hidden>Instagram</a>
+        <a href="#" data-sitio-tel></a>
       </div>
     </div>
 
-    <p class="footer-copy">© <span id="anio">2026</span> Lira Ferrer · Barranquilla, Colombia · Todos los derechos reservados</p>
+    <p class="footer-copy">© <span id="anio">2026</span> <span data-sitio="marca_nombre"></span> · <span data-sitio="marca_ciudad"></span> · Todos los derechos reservados</p>
   </footer>
 
-  <!-- WhatsApp flotante: app.js completa el enlace en todo [data-whatsapp] -->
-  <a href="#" class="wa-flotante" id="waFlotante" data-whatsapp="" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <a href="#" class="wa-flotante" id="waFlotante" data-whatsapp target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    <span class="wa-texto">Escríbenos</span>
   </a>
 
-  <script src="assets/js/core/app.js"></script>
-  <script src="assets/js/components/galeria.js"></script>
-  <script src="assets/js/pages/producto.js"></script>
-  <script src="assets/js/pages/piezas-locales.js"></script>
-  <script src="assets/js/pages/producto-tema.js"></script>
-  <script src="assets/js/pages/efectos.js"></script>
+  <script src="assets/js/core/app.js?v=15"></script>
+  <script src="assets/js/components/galeria.js?v=15"></script>
+  <script src="assets/js/pages/producto.js?v=15"></script>
+  <script src="assets/js/pages/producto-tema.js?v=15"></script>
 </body>
 </html>

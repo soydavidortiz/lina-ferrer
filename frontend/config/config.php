@@ -12,7 +12,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 // Negocio
-define('WHATSAPP', '573506830028');          // 57 + número
+define('WHATSAPP', '573003333333');          // 57 + número
 define('ENVIO_COSTO', 0);                    // 0 = envío gratis
 define('MAX_UNIDADES_POR_PEDIDO', 3);
 define('METODOS_PAGO', ['transferencia', 'tarjeta', 'asesor']);

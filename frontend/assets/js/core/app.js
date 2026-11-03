@@ -1,12 +1,14 @@
 /* =========================================================
-   LIRA FERRER — Núcleo compartido (producto, comprar, gracias)
+   LIRA FERRER — Núcleo compartido
+   Todo el contenido de marca viene de la base de datos
+   (api/sitio.php y api/productos.php). Aquí no hay datos
+   de productos ni textos de marca escritos a mano.
    ========================================================= */
 window.Lira = (function () {
   'use strict';
 
-  // ---------- CONFIGURACIÓN ----------
+  // ---------- Constantes de interfaz / pedido ----------
   const CONFIG = {
-    WHATSAPP: '573000000000',   // ← 57 + tu número, sin espacios
     API: 'api/',
     MAX_UNIDADES: 3,
     ENVIO: 0,
@@ -17,74 +19,33 @@ window.Lira = (function () {
     }
   };
 
-  // ---------- PRODUCTOS DE RESPALDO (si no hay servidor/BD) ----------
-  const PRODUCTOS_LOCAL = [
-    {
-      id: 1,
-      slug: 'herencia-borgona',
-      nombre: 'Herencia Borgoña',
-      color: 'Vino tinto',
-      detalle: 'Vino tinto · Lira en filigrana de oro con esmeralda',
-      descripcion: 'Un vino tinto profundo, del color de las tardes largas del Caribe. Herencia Borgoña nace de una piel de vacuno de primera calidad, trabajada y trenzada a mano por artesanos colombianos, y coronada con la lira en filigrana de oro que sostiene una esmeralda colombiana certificada.',
-      precio: 2850000,
-      stock: 50,
-      edicion_total: 50,
-      imagen: 'assets/img/bolsos/bolso-vinotinto.png',
-      galeria: [
-        'assets/img/bolsos/bolso-vinotinto.png',
-        'assets/img/galeria/borgona-1.jpg',
-        'assets/img/galeria/borgona-2.jpg'
-      ],
-      especificaciones: [
-        { etiqueta: 'Piel', valor: 'Vacuno de primera calidad, curtido vegetal' },
-        { etiqueta: 'Asas', valor: 'Trenzadas a mano' },
-        { etiqueta: 'Emblema', valor: 'Lira en filigrana de oro' },
-        { etiqueta: 'Gema', valor: 'Esmeralda colombiana certificada' },
-        { etiqueta: 'Medidas', valor: '28 × 22 × 12 cm' }
-      ]
-    },
-    {
-      id: 2,
-      slug: 'perla-eterna',
-      nombre: 'Perla Eterna',
-      color: 'Blanco perla',
-      detalle: 'Blanco perla · Lira en filigrana de oro con esmeralda',
-      descripcion: 'Blanco perla, luminoso y atemporal. Perla Eterna está pensada para acompañarte de generación en generación: piel de vacuno seleccionada, asas trenzadas a mano y la lira de la casa en filigrana de oro con su esmeralda colombiana certificada.',
-      precio: 2850000,
-      stock: 50,
-      edicion_total: 50,
-      imagen: 'assets/img/bolsos/bolso-blanco.png',
-      galeria: [
-        'assets/img/bolsos/bolso-blanco.png',
-        'assets/img/galeria/galeria-2.jpg',
-        'assets/img/galeria/galeria-1.jpg'
-      ],
-      especificaciones: [
-        { etiqueta: 'Piel', valor: 'Vacuno de primera calidad, curtido vegetal' },
-        { etiqueta: 'Asas', valor: 'Trenzadas a mano' },
-        { etiqueta: 'Emblema', valor: 'Lira en filigrana de oro' },
-        { etiqueta: 'Gema', valor: 'Esmeralda colombiana certificada' },
-        { etiqueta: 'Medidas', valor: '28 × 22 × 12 cm' }
-      ]
-    }
-  ];
+  let sitio = null;
+  let sitioPromesa = null;
 
-  const enServidor = location.protocol.startsWith('http');
-
-  // ---------- UTILIDADES ----------
+  // ---------- Utilidades ----------
   const formatoCOP = n => '$' + Number(n || 0).toLocaleString('es-CO') + ' COP';
+
   const escapar = txt => String(txt ?? '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
   const param = nombre => new URLSearchParams(location.search).get(nombre);
-  const whatsappUrl = msg => `https://wa.me/${CONFIG.WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+  const urlSegura = url => {
+    const u = String(url || '').trim();
+    if (!u) return '';
+    if (/^(https?:\/\/|\/|\.\/|assets\/)/i.test(u)) return u;
+    return '';
+  };
+
   const crearError = (mensaje, extra) => Object.assign(new Error(mensaje), extra || {});
 
   // ---------- API ----------
   async function api(ruta, opciones = {}) {
-    if (!enServidor) {
-      throw crearError('Para enviar pedidos, el sitio debe abrirse desde un servidor (XAMPP, Laragon o hosting).', { sinServidor: true });
+    if (!location.protocol.startsWith('http')) {
+      throw crearError('El sitio debe abrirse desde un servidor (XAMPP, Laragon o hosting).', { sinServidor: true });
     }
+
     let res;
     try {
       res = await fetch(CONFIG.API + ruta, {
@@ -105,42 +66,144 @@ window.Lira = (function () {
     if (!res.ok || json.ok === false) {
       throw crearError(json.mensaje || 'Ocurrió un error.', { status: res.status, errores: json.errores || {} });
     }
+
     return json.data;
   }
 
-  async function obtenerProductos() {
-    if (!enServidor) return PRODUCTOS_LOCAL;
-    try {
-      const lista = await api('productos.php');
-      return Array.isArray(lista) && lista.length ? lista : PRODUCTOS_LOCAL;
-    } catch (e) {
-      return PRODUCTOS_LOCAL;
+  function cargarSitio(forzar = false) {
+    if (sitio && !forzar) return Promise.resolve(sitio);
+    if (!sitioPromesa || forzar) {
+      sitioPromesa = api('sitio.php')
+        .then(datos => {
+          sitio = datos || {};
+          return sitio;
+        })
+        .catch(err => {
+          sitioPromesa = null;
+          throw err;
+        });
     }
+    return sitioPromesa;
+  }
+
+  function config(clave, porDefecto = '') {
+    const valor = sitio && sitio.config ? sitio.config[clave] : '';
+    return valor === undefined || valor === null || valor === '' ? porDefecto : valor;
+  }
+
+  function whatsappUrl(mensaje) {
+    const numero = String(config('whatsapp', '')).replace(/\D+/g, '');
+    if (!numero) return '#';
+    const texto = mensaje || config('whatsapp_mensaje', '');
+    return `https://wa.me/${numero}${texto ? '?text=' + encodeURIComponent(texto) : ''}`;
+  }
+
+  async function obtenerProductos() {
+    const lista = await api('productos.php');
+    return Array.isArray(lista) ? lista : (lista && lista.productos) || [];
   }
 
   async function obtenerProducto(slug) {
-    const local = () => PRODUCTOS_LOCAL.find(p => p.slug === slug) || null;
-    if (!enServidor) return local();
-    try {
-      return await api('productos.php?slug=' + encodeURIComponent(slug));
-    } catch (e) {
-      if (e.status === 404) return null;   // existe la API pero no la pieza
-      return local();                      // API caída → datos locales
-    }
+    return api('productos.php?slug=' + encodeURIComponent(slug));
   }
 
-  // ---------- COMPONENTES SIMPLES ----------
+  function precioTexto(producto) {
+    const precio = Number(producto && producto.precio) || 0;
+    return precio > 0 ? formatoCOP(precio) : config('precio_consultar', 'Precio a convenir');
+  }
+
+  // ---------- Aplicar configuración al layout ----------
+  function aplicarSitio() {
+    const c = (sitio && sitio.config) || {};
+
+    // Ajustes de tienda editables desde el panel
+    const envio = Number(c.envio_costo);
+    if (Number.isFinite(envio) && envio >= 0) CONFIG.ENVIO = envio;
+
+    const maxUnidades = parseInt(c.max_unidades, 10);
+    if (Number.isFinite(maxUnidades) && maxUnidades > 0) CONFIG.MAX_UNIDADES = maxUnidades;
+
+    const metodos = String(c.metodos_pago || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (metodos.length) {
+      const etiquetas = { ...CONFIG.METODOS };
+      CONFIG.METODOS = Object.fromEntries(metodos.map(m => [m, etiquetas[m] || m]));
+    }
+
+    document.querySelectorAll('[data-sitio]').forEach(el => {
+      const clave = el.dataset.sitio;
+      if (Object.prototype.hasOwnProperty.call(c, clave)) el.textContent = c[clave];
+    });
+
+    document.querySelectorAll('[data-sitio-mail]').forEach(el => {
+      if (!c.email) { el.hidden = true; return; }
+      el.href = 'mailto:' + c.email;
+      el.textContent = c.email;
+      el.hidden = false;
+    });
+
+    document.querySelectorAll('[data-sitio-tel]').forEach(el => {
+      if (!c.telefono) { el.hidden = true; return; }
+      el.href = 'tel:' + c.telefono.replace(/[^\d+]/g, '');
+      el.textContent = c.telefono;
+      el.hidden = false;
+    });
+
+    const instagram = document.querySelectorAll('[data-sitio-instagram]');
+    instagram.forEach(el => {
+      const url = urlSegura(c.instagram);
+      if (!url) { el.hidden = true; return; }
+      el.href = url;
+      el.hidden = false;
+    });
+
+    const enlaceWa = whatsappUrl();
+    document.querySelectorAll('[data-whatsapp]').forEach(el => {
+      if (enlaceWa === '#') { el.hidden = true; return; }
+      el.href = enlaceWa;
+      el.target = '_blank';
+      el.rel = 'noopener';
+      el.hidden = false;
+    });
+
+    const waFlotante = document.getElementById('waFlotante');
+    if (waFlotante) waFlotante.hidden = enlaceWa === '#';
+
+    // Cintas de sellos (inicio y páginas internas)
+    const sellos = [c.sello_1, c.sello_2, c.sello_3, c.sello_4].filter(Boolean);
+    document.querySelectorAll('[data-sitio-cinta]').forEach(el => {
+      el.innerHTML = sellos.map(s => `<span>${escapar(s)}</span>`).join('');
+    });
+
+    // Metadatos básicos
+    if (c.marca_nombre) {
+      const tituloActual = document.title.split('|')[0].trim();
+      if (!tituloActual || tituloActual === 'Lira Ferrer' || tituloActual === 'Pieza') {
+        document.title = `${c.marca_nombre} | ${c.marca_tagline || 'Alta marroquinería colombiana'}`;
+      }
+    }
+    const metaDesc = document.getElementById('metaDescripcion');
+    if (metaDesc && c.seo_descripcion) metaDesc.setAttribute('content', c.seo_descripcion);
+    const ogTitulo = document.getElementById('ogTitulo');
+    if (ogTitulo && c.marca_nombre) ogTitulo.setAttribute('content', `${c.marca_nombre} | ${c.marca_tagline || ''}`);
+    const ogDesc = document.getElementById('ogDescripcion');
+    if (ogDesc && c.seo_descripcion) ogDesc.setAttribute('content', c.seo_descripcion);
+    const ogImagen = document.getElementById('ogImagen');
+    if (ogImagen && c.hero_imagen) ogImagen.setAttribute('content', new URL(urlSegura(c.hero_imagen), location.href).href);
+  }
+
+  // ---------- Componentes ----------
   function tarjetaPieza(p) {
     const url = 'producto.html?slug=' + encodeURIComponent(p.slug);
+    const imagen = urlSegura(p.imagen);
     return `
       <article class="pieza reveal">
-        <a href="${url}" class="pieza-img">
-          <img src="${escapar(p.imagen)}" alt="${escapar(p.nombre)}" loading="lazy">
+        <a href="${url}" class="pieza-img" aria-label="Ver ${escapar(p.nombre)}">
+          <img src="${escapar(imagen)}" alt="${escapar(p.nombre)}" loading="lazy" decoding="async">
         </a>
         <div class="pieza-info">
           <h3>${escapar(p.nombre)}</h3>
           <p class="pieza-detalle">${escapar(p.detalle)}</p>
-          <span class="pieza-precio">${formatoCOP(p.precio)}</span>
+          <span class="pieza-precio">${escapar(precioTexto(p))}</span>
           <a href="${url}" class="btn btn-linea">Ver pieza</a>
         </div>
       </article>`;
@@ -172,13 +235,13 @@ window.Lira = (function () {
             observer.unobserve(e.target);
           }
         });
-      }, { threshold: 0.15 });
+      }, { threshold: 0.12 });
     }
     elementos.forEach(el => observer.observe(el));
   }
 
-  // ---------- LAYOUT COMÚN ----------
-  function iniciarLayout() {
+  // ---------- Layout común ----------
+  async function iniciarLayout() {
     const nav = document.getElementById('nav');
     if (nav && !nav.classList.contains('nav-solida')) {
       const alScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
@@ -195,11 +258,15 @@ window.Lira = (function () {
       );
     }
 
-    document.querySelectorAll('[data-whatsapp]').forEach(a => {
-      a.href = whatsappUrl(a.dataset.whatsapp || 'Hola, quisiera más información sobre las piezas Lira Ferrer');
-      a.target = '_blank';
-      a.rel = 'noopener';
-    });
+    try {
+      await cargarSitio();
+      aplicarSitio();
+    } catch (err) {
+      document.querySelectorAll('[data-whatsapp]').forEach(el => { el.hidden = true; });
+      const flotante = document.getElementById('waFlotante');
+      if (flotante) flotante.hidden = true;
+      console.error('[Lira Ferrer] No se pudo cargar el contenido:', err);
+    }
 
     const anio = document.getElementById('anio');
     if (anio) anio.textContent = new Date().getFullYear();
@@ -208,9 +275,16 @@ window.Lira = (function () {
     activarReveal(document);
   }
 
+  function jsonLd(datos) {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(datos);
+    document.head.appendChild(script);
+  }
+
   return {
-    CONFIG, enServidor, formatoCOP, escapar, param, whatsappUrl,
-    api, obtenerProductos, obtenerProducto,
-    tarjetaPieza, vigilarImagenes, activarReveal, iniciarLayout
+    CONFIG, formatoCOP, escapar, param, urlSegura, whatsappUrl,
+    api, cargarSitio, config, obtenerProductos, obtenerProducto, precioTexto,
+    tarjetaPieza, vigilarImagenes, activarReveal, iniciarLayout, jsonLd
   };
 })();

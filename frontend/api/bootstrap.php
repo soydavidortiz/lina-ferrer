@@ -9,6 +9,7 @@ require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../helpers/Response.php';
 require_once __DIR__ . '/../helpers/Validator.php';
 require_once __DIR__ . '/../models/Producto.php';
+require_once __DIR__ . '/../models/Sitio.php';
 require_once __DIR__ . '/../models/Cliente.php';
 require_once __DIR__ . '/../models/Pedido.php';
 

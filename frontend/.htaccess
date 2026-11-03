@@ -1,0 +1,47 @@
+# =========================================================
+#  LIRA FERRER — .htaccess
+# =========================================================
+
+# Sin listado de carpetas
+Options -Indexes
+
+# Página inicial y codificación
+DirectoryIndex index.html index.php
+AddDefaultCharset UTF-8
+
+# ---------- Bloquear carpetas privadas ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(_respaldo|config|helpers|models|database)(/|$) - [F,L]
+</IfModule>
+
+# ---------- Bloquear archivos sensibles ----------
+<FilesMatch "\.(sql|env|log|ini|md|bak|sh)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# ---------- Cabeceras de seguridad ----------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ---------- Compresión ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- Caché de archivos estáticos ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png  "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType text/css   "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/html  "access plus 0 seconds"
+</IfModule>

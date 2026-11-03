@@ -4,9 +4,20 @@
 (async function () {
   'use strict';
   const L = window.Lira;
-  L.iniciarLayout();
+  await L.iniciarLayout();
+
+  // Mostrar solo los métodos de pago habilitados desde el panel
+  document.querySelectorAll('.metodo[data-metodo]').forEach(el => {
+    if (!Object.prototype.hasOwnProperty.call(L.CONFIG.METODOS, el.dataset.metodo)) el.remove();
+  });
 
   const $ = id => document.getElementById(id);
+
+  ['cGarantia1', 'cGarantia2', 'cGarantia3'].forEach((id, i) => {
+    const el = $(id);
+    if (el) el.textContent = L.config('garantia_' + (i + 1));
+  });
+
   const form = $('formCompra');
   const btn = $('btnEnviar');
   const alerta = $('alertaForm');
@@ -26,7 +37,7 @@
   const producto = slug ? await L.obtenerProducto(slug).catch(() => null) : null;
   $('estadoCarga').hidden = true;
 
-  if (!producto || producto.stock <= 0) {
+  if (!producto || producto.stock <= 0 || Number(producto.precio) <= 0) {
     $('estadoError').hidden = false;
     return;
   }

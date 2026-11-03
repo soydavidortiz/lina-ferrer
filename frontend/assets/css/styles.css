@@ -11,7 +11,7 @@
   --verde-claro: #11573d;
   --oro: #c9a961;
   --oro-claro: #e2c98a;
-  --oro-oscuro: #8a6d2b;      /* oro legible sobre fondos claros (contraste ≥ 4.5) */
+  --oro-oscuro: #74561a;      /* oro legible sobre fondos claros (contraste ≥ 4.5) */
   --crema: #f5f0e8;
   --blanco: #ffffff;
   --tinta: #25302b;
@@ -828,8 +828,12 @@ img.img-falta { visibility: hidden; }
 }
 .footer-logo { font-family: var(--script); font-size: 2.8rem; line-height: 1.1; color: var(--oro-claro); display: inline-block; margin-bottom: 12px; }
 .footer-marca p { font-size: 0.9rem; max-width: 300px; }
+.footer h2,
+.footer h3,
 .footer h4 { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--oro); margin-bottom: 16px; }
 .footer-links, .footer-contacto { display: flex; flex-direction: column; }
+.footer-contacto h2,
+.footer-contacto h3,
 .footer-contacto h4 { margin-bottom: 6px; }
 .footer-links a,
 .footer-contacto a {
@@ -844,37 +848,44 @@ img.img-falta { visibility: hidden; }
 .footer-copy { text-align: center; font-size: 0.75rem; letter-spacing: 0.04em; padding: 28px 5% 0; }
 
 /* =========================================================
-   WHATSAPP FLOTANTE (aparece tras bajar un poco)
+   WHATSAPP FLOTANTE — siempre visible, a la izquierda
    ========================================================= */
 .wa-flotante {
   position: fixed;
-  right: max(16px, env(safe-area-inset-right));
-  bottom: max(16px, env(safe-area-inset-bottom));
+  left: max(16px, env(safe-area-inset-left));
+  right: auto;
+  bottom: max(20px, env(safe-area-inset-bottom));
   z-index: 90;
-  width: 56px; height: 56px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  background: var(--verde-oscuro);
-  border: 1px solid var(--oro);
-  color: var(--oro-claro);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transform: translateY(16px) scale(0.9);
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.5s var(--ease), background 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 52px;
+  padding: 0 18px 0 13px;
+  border-radius: var(--radio-pill);
+  background: #25d366;
+  border: 1px solid rgba(8, 46, 33, 0.22);
+  color: #073a25;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.35s var(--ease);
 }
-.wa-flotante.visible { opacity: 1; transform: none; pointer-events: auto; }
-.wa-flotante:hover { background: var(--oro); color: var(--verde-oscuro); }
-.wa-flotante svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.wa-flotante:hover { background: #1fb958; color: var(--blanco); transform: translateY(-2px); }
+.wa-flotante svg { width: 24px; height: 24px; flex: none; fill: currentColor; stroke: none; }
+.wa-flotante .wa-texto {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 .wa-flotante::after {
   content: '';
   position: absolute; inset: -1px;
-  border-radius: 50%;
-  border: 1px solid var(--oro);
+  border-radius: var(--radio-pill);
+  border: 1px solid rgba(37, 211, 102, 0.55);
   animation: latido 2.8s ease-out infinite;
   pointer-events: none;
 }
-@keyframes latido { from { transform: scale(1); opacity: 0.7; } to { transform: scale(1.6); opacity: 0; } }
+@keyframes latido { from { transform: scale(1); opacity: 0.7; } to { transform: scale(1.12); opacity: 0; } }
 
 [hidden] { display: none !important; }
 

@@ -65,6 +65,22 @@ function requerir_rol(string ...$roles): void
     }
 }
 
+/** ¿El usuario puede crear, editar o eliminar contenido? */
+function puede_editar(): bool
+{
+    return in_array($_SESSION['admin_rol'] ?? '', ['admin', 'gestor'], true);
+}
+
+/** Bloquea acciones de escritura para el rol de consulta. */
+function requerir_editor(): void
+{
+    requerir_admin();
+    if (!puede_editar()) {
+        http_response_code(403);
+        exit('Tu perfil es de consulta: no puedes modificar la información.');
+    }
+}
+
 // =========================================================
 //  LOGIN
 // =========================================================

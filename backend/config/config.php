@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 // ===== Aplicación =====
 const APP_ENV          = 'local';                  // 'local' o 'produccion'
-const APP_NOMBRE       = 'Lina Ferrer · Panel';
+const APP_NOMBRE       = 'Lira Ferrer · Panel';
 const APP_ZONA_HORARIA = 'America/Bogota';
 
 // URL del backend, sin barra final:

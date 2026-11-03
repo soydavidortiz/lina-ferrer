@@ -4,8 +4,8 @@ if (PHP_SAPI !== 'cli') {
     exit('Solo ejecutable por consola.');
 }
 
-require_once __DIR__ . '/../_app/config.php';
-require_once __DIR__ . '/../_app/db.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/db.php';
 
 function preguntar(string $texto): string
 {
